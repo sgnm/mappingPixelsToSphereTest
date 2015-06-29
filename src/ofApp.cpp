@@ -3,11 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0,0,0);
+//    ofScale(1, -1);
     ofEnableSmoothing();
     ofEnableDepthTest();
+    ofEnableAlphaBlending();
     
     image.loadImage("world.png");
-    image.resize(400, 200);
+    image.resize(200, 100);
     w = image.width;
     h = image.height;
     threshold = 140;
@@ -31,13 +33,13 @@ void ofApp::draw(){
     float radius = h * PI;
     float map_x, map_y;
     
-    for(int x = 0; x < w; x+=10){
-        for(int y = 0; y < h; y+=10){
+    for(int x = 0; x < w; x+=1){
+        for(int y = 0; y < h; y+=1){
             float position_x;
             float position_y;
             
             // xy平面で、radを-π/2~π/2まで回してあげる
-            for (float k = -PI/2; k < PI/2; k += 0.1) {
+            for (float k = 0; k < 2 *PI; k += 0.1) {
                 
                 // 画像から色と明るさ取得
                 ofColor imgColor = image.getColor(x, y);
@@ -67,10 +69,18 @@ void ofApp::draw(){
                 map_x = ofMap(x, 0, w, 0, circumference_x);
                 map_y = ofMap(y, 0, h, 0, circumference_y / 2); //heightなので、球体の半円でマッピング(π * r)
 
-                cout << mesh.getNumVertices() << endl;
+//                cout << mesh.getNumVertices() << endl;
                 
                 ofMap(rad, 0, circumference_x, 0, 2 * PI);
-                ofVec3f pos(map_x, map_y, map_x * tan(rad));
+//                float phi = atan2(map_y, map_x);
+//                ofVec3f pos(map_x, map_y, map_x * tan(rad));
+                float theta = (float)y * M_PI / h;
+                float phi = -(float)x * 2.0f * M_PI / w;
+                float px = radius * sin(theta) * cos(phi);
+                float py = radius * sin(theta) * sin(phi);
+                float pz = radius * cos(theta);
+                ofVec3f pos(px, py, pz);
+                ofScale(0.5, 0.5);
                 mesh.addVertex(pos);
                 
                 ofPopMatrix();
