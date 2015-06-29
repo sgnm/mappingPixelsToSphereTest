@@ -20,7 +20,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     ofImage image, outImage;
-    ofMesh mesh;
+//    ofMesh mesh;
+    ofVboMesh mesh;
     
     int threshold;
     float rad = 0.0;

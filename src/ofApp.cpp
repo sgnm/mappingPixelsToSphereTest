@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0,0,0);
+    ofSetFrameRate(30);
 //    ofScale(1, -1);
     ofEnableSmoothing();
     ofEnableDepthTest();
@@ -12,6 +13,7 @@ void ofApp::setup(){
     image.resize(200, 100);
     w = image.width;
     h = image.height;
+    image.allocate(w, h, OF_IMAGE_COLOR);
     threshold = 140;
     //画像データを配列に格納
     unsigned char *pixels = image.getPixels();
@@ -19,22 +21,24 @@ void ofApp::setup(){
     
     mesh.setMode(OF_PRIMITIVE_POINTS);
     mesh.enableColors();
-    glPointSize(2);
+    glPointSize(1);
     glEnable(GL_DEPTH_TEST);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    mesh.clearVertices();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
+    cam.begin();
     float radius = h * PI;
     float map_x, map_y;
     
-    for(int x = 0; x < w; x+=1){
-        for(int y = 0; y < h; y+=1){
+    for(int x = 0; x < w; x+=5){
+        for(int y = 0; y < h; y+=5){
             float position_x;
             float position_y;
             
@@ -47,33 +51,15 @@ void ofApp::draw(){
                 
                 if (intensity < threshold) {
                     // 明るさの閾値より低い時、青を表示
-                    mesh.addColor(ofColor(0, 0, 255));
+                    mesh.addColor(ofColor::fromHsb(240, 255, 255));
                 }else{
-                    mesh.addColor(ofColor(0, 255, 0));
+                    mesh.addColor(ofColor::fromHsb(120, 255, 255));
                 }
 
                 ofPushMatrix();
 
                 ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
                 
-                // その座標の円周しりたいのでx座標とy座標求める
-                position_x = radius * cos(k);
-                position_y = radius * sin(k);
-                
-                // そのx座標での円周と、y座標の円周算出
-                float circumference_x = position_x * 2 * PI;
-                float circumference_y = position_y * 2 * PI;
-                
-                // x座標が、画像の0~widthの中でのどの位置にあたるかを出して、
-                // 画像の幅は、球体で言うと、そのx座標の円周になる！
-                map_x = ofMap(x, 0, w, 0, circumference_x);
-                map_y = ofMap(y, 0, h, 0, circumference_y / 2); //heightなので、球体の半円でマッピング(π * r)
-
-//                cout << mesh.getNumVertices() << endl;
-                
-                ofMap(rad, 0, circumference_x, 0, 2 * PI);
-//                float phi = atan2(map_y, map_x);
-//                ofVec3f pos(map_x, map_y, map_x * tan(rad));
                 float theta = (float)y * M_PI / h;
                 float phi = -(float)x * 2.0f * M_PI / w;
                 float px = radius * sin(theta) * cos(phi);
@@ -88,8 +74,8 @@ void ofApp::draw(){
         }
     }
 
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     mesh.draw();
+    cam.end();
     
 }
 
