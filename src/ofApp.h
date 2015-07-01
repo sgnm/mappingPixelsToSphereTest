@@ -20,7 +20,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     ofImage image, outImage;
-//    ofMesh mesh;
     ofVboMesh mesh;
     
     int threshold;
@@ -30,5 +29,10 @@ class ofApp : public ofBaseApp{
     
     int w, h;
     int rotate;
+    
+    float theta, phi;
+    
+    int imgVec[200];
+    int i = 0;
 		
 };
