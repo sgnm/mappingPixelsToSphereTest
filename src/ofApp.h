@@ -19,6 +19,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+    static const int NUM_PARTICLES = 20000;
+    
     ofImage image, outImage;
     ofVboMesh mesh;
     
@@ -34,5 +36,8 @@ class ofApp : public ofBaseApp{
     
     int imgVec[200];
     int i = 0;
+    
+    ofColor imgColor[NUM_PARTICLES];
+    float intensity[NUM_PARTICLES];
 		
 };

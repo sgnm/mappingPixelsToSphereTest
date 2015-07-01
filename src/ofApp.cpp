@@ -23,6 +23,20 @@ void ofApp::setup(){
     glPointSize(2);
     glEnable(GL_DEPTH_TEST);
     
+    for(int x = 0; x < w; x+=1){
+        for(int y = 0; y < h; y+=1){
+            // 画像から色と明るさ取得
+            imgColor[i] = image.getColor(x, y);
+            intensity[i] = imgColor[i].getLightness();
+            if (intensity[i] < threshold) {
+                // 明るさの閾値より低い時、青を表示
+                mesh.addColor(ofColor::fromHsb(150, 255, 255));
+            }else{
+                mesh.addColor(ofColor::fromHsb(120, 255, 255));
+            }
+            i++;
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -41,17 +55,6 @@ void ofApp::draw(){
     
     for(int x = 0; x < w; x+=1){
         for(int y = 0; y < h; y+=1){
-            
-            // 画像から色と明るさ取得
-            ofColor imgColor = image.getColor(x, y);
-            float intensity = imgColor.getLightness();
-            
-            if (intensity < threshold) {
-                // 明るさの閾値より低い時、青を表示
-                mesh.addColor(ofColor::fromHsb(150, 255, 255));
-            }else{
-                mesh.addColor(ofColor::fromHsb(120, 255, 255));
-            }
 
             ofPushMatrix();
 
@@ -70,7 +73,7 @@ void ofApp::draw(){
         }
     }
 
-    mesh.draw();
+    mesh.drawVertices();
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 20, 20);
     
     cam.end();
