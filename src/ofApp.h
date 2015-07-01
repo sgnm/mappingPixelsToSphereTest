@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxJSON.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,9 +21,10 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     static const int NUM_PARTICLES = 20000;
-    
+
     ofImage image, outImage;
     ofVboMesh mesh;
+    ofxJSONElement response;    
     
     int threshold;
     float rad = 0.0;

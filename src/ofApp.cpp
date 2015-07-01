@@ -7,7 +7,7 @@ void ofApp::setup(){
     ofEnableSmoothing();
     ofEnableDepthTest();
     ofEnableAlphaBlending();
-//    ofEnableBlendMode(OF_BLENDMODE_ADD); //加算合成すると北極と南極が明るすぎるので無い方が綺麗
+    ofEnableBlendMode(OF_BLENDMODE_ADD); //加算合成すると北極と南極が明るすぎるので無い方が綺麗
     
     image.loadImage("world.png");
     image.resize(200, 100);
@@ -20,7 +20,7 @@ void ofApp::setup(){
 
     mesh.setMode(OF_PRIMITIVE_POINTS);
     mesh.enableColors();
-    glPointSize(2);
+    glPointSize(1.5);
     glEnable(GL_DEPTH_TEST);
     
     for(int x = 0; x < w; x+=1){
@@ -37,6 +37,8 @@ void ofApp::setup(){
             i++;
         }
     }
+    
+    cam.setDistance(750);
 }
 
 //--------------------------------------------------------------
@@ -44,6 +46,10 @@ void ofApp::update(){
     mesh.clearVertices();
 //    ofRotateY(rotate);
     rotate += 1;
+    
+    // jsonデータ取得
+    response.open("/Users/Shin/Desktop/stream.json");
+    response.getRawString();
 }
 
 //--------------------------------------------------------------
@@ -73,10 +79,15 @@ void ofApp::draw(){
         }
     }
 
-    mesh.drawVertices();
-    ofDrawBitmapString(ofToString(ofGetFrameRate()), 20, 20);
+    mesh.draw();
+    ofDrawBitmapString(ofToString(ofGetFrameRate(), 0), 20, 20);
     
     cam.end();
+    
+    // ツイートの位置情報取得
+    float lon = response["place"]["bounding_box"]["coordinates"][0][0][0].asFloat();
+    float lat = response["place"]["bounding_box"]["coordinates"][0][0][1].asFloat();
+    cout << ofToString(lon, 12) + " " + ofToString(lat, 12) << endl;
     
 }
 

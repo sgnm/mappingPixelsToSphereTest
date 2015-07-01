@@ -12,6 +12,8 @@
 	<dict>
 		<key>0625BFC1F4E8602CEE9C5EB5AB326ACD607374C1</key>
 		<string>https://github.com/sgnm/mappingPixelsToSphereTest.git</string>
+		<key>5DB7C332A3A89035E93556A2A38BF414005BA671</key>
+		<string>https://github.com/jefftimesten/ofxJSON.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>mappingPixelsToSphereTest.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>0625BFC1F4E8602CEE9C5EB5AB326ACD607374C1</key>
 		<string>../..</string>
+		<key>5DB7C332A3A89035E93556A2A38BF414005BA671</key>
+		<string>../../ofxJSON</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/sgnm/mappingPixelsToSphereTest.git</string>
@@ -35,6 +39,14 @@
 			<string>0625BFC1F4E8602CEE9C5EB5AB326ACD607374C1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>mappingPixelsToSphereTest</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5DB7C332A3A89035E93556A2A38BF414005BA671</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxJSON</string>
 		</dict>
 	</array>
 </dict>
